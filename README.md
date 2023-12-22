@@ -26,8 +26,8 @@ $ php artisan migrate
 ----
 
 ## 畫面截圖
-![](https://i.imgur.com/jNJ24Gn.gif)
+![](https://i.imgur.com/rIk0GQh.gif)
 > 提供的匯率來自於第三方，這些匯率的正確性沒有經過驗證，而且實際匯率可能會有所差異
 
-![](https://i.imgur.com/9is61d3.png)
+![](https://i.imgur.com/A9eAOCu.png)
 > 每次執行匯率換算會記錄到歷程以供查詢

@@ -2,7 +2,7 @@
     <form class="form pb-3" wire:submit.prevent="convert">
         <div class="mb-3">
             <label class="form-label">{{ __('From') }}</label>
-            <select class="form-control" wire:model="from" type="text" name="from">
+            <select class="form-control" wire:model.live="from" type="text" name="from">
                 <option selected="selected">{{ __('(Select)') }}</option>
                 @foreach($currencies as $currency)
                 <option value="{{$currency}}">{{$currency}}</option>
@@ -14,7 +14,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">{{ __('To') }}</label>
-            <select class="form-control" wire:model="to" type="text" name="to" value="">
+            <select class="form-control" wire:model.live="to" type="text" name="to" value="">
                 <option selected="selected">{{ __('(Select)') }}</option>
                 @foreach($currencies as $currency)
                 <option value="{{$currency}}">{{$currency}}</option>

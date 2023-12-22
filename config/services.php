@@ -14,6 +14,16 @@ return [
     |
     */
 
+    'exchangerate' => [
+        'domain' => env('EXCHANGERATE_DOMAIN', 'api.exchangerate.host'),
+        'key' => env('EXCHANGERATE_ACCESS_KEY'),
+        'scheme' => env('EXCHANGERATE_SCHEME', 'https'),
+        'ttl' => [
+            'convert' => env('EXCHANGERATE_TTL_CONVERT', 3600),
+            'list' => env('EXCHANGERATE_TTL_LIST', 3600),
+        ],
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

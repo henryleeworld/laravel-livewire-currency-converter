@@ -10,7 +10,12 @@ use Illuminate\Support\Facades\Log;
 
 class ExchangeRateHost implements ExchangeRateContract
 {
-    private const API_URL = 'https://api.exchangerate.host';
+    private string $apiUrl;
+
+    public function __construct()
+    {
+        $this->apiUrl = config('services.exchangerate.scheme') . '://' . config('services.exchangerate.domain');
+    }
 
     /**
      * @inheritdoc
@@ -19,13 +24,13 @@ class ExchangeRateHost implements ExchangeRateContract
     public function convert(string $from, string $to): float
     {
         $cacheKey = sprintf('%s-%s-%s', __CLASS__, $from, $to);
-        $ttl = (int) config('services.conversion.ttl', 3600);
+        $ttl = (int) config('services.exchangerate.ttl.convert', 3600);
         return Cache::remember($cacheKey, $ttl, function () use ($from, $to) {
-            $uri = sprintf('/convert?from=%s&to=%s', $from, $to);
-            $response = Http::get(self::API_URL . $uri);
+            $uri = sprintf('/convert?access_key=%s&from=%s&to=%s&amount=1', config('services.exchangerate.key'), $from, $to);
+            $response = Http::get($this->apiUrl . $uri);
             $array = $response->json();
             if(!$array['success'] ?? false){
-                Log::error("Error in API Response of Exchange Rate Conversion", [
+                Log::error("Error in API Response of currency conversion", [
                     'class' => __CLASS__,
                     'from' => $from,
                     'to' => $to,
@@ -45,21 +50,22 @@ class ExchangeRateHost implements ExchangeRateContract
      */
     public function getAllowedCurrencies(): array
     {
-        $cacheKey = sprintf('%s-%s', __CLASS__, 'symbols');
-        $ttl = (int) config('services.symbols.ttl', 3600);
+        $cacheKey = sprintf('%s-%s', __CLASS__, 'list');
+        $ttl = (int) config('services.exchangerate.ttl.list', 3600);
         return Cache::remember($cacheKey, $ttl, function (){
-            $response = Http::get(self::API_URL . '/symbols');
+            $uri = sprintf('/list?access_key=%s', config('services.exchangerate.key'));
+            $response = Http::get($this->apiUrl . $uri);
             $array = $response->json();
             if(!$array['success'] ?? false){
-                Log::error("Error in API Response of fetching symbols", [
+                Log::error("Error in API Response of fetching supported currencies", [
                     'class' => __CLASS__,
                     'response' => $response->body(),
                     'status' => $response->status(),
                 ]);
-                throw new ExchangeRateException("Could not fetch symbols");
+                throw new ExchangeRateException("Could not fetch supported currencies");
             }
 
-            return array_keys($array['symbols']);
+            return array_keys($array['currencies']);
         });
     }
 }
