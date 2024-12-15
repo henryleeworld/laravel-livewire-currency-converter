@@ -9,6 +9,15 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     /**
+     * All of the container bindings that should be registered.
+     *
+     * @var array
+     */
+    public $bindings = [
+        ExchangeRateContract::class => ExchangeRateHost::class,
+    ];
+
+    /**
      * Register any application services.
      */
     public function register(): void
@@ -21,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(ExchangeRateContract::class, ExchangeRateHost::class);
+        //
     }
 }
