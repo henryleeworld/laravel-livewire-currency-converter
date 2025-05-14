@@ -1,4 +1,4 @@
-# Laravel 11 Livewire 匯率換算
+# Laravel 12 Livewire 匯率換算
 
 輕鬆換算美元、日幣、人民幣等多種幣別，不用查看匯率即可馬上換算，如果能掌握台幣和外幣之間的匯率波動，還有機會賺取利差、匯差。
 
@@ -26,8 +26,8 @@ $ php artisan migrate
 ----
 
 ## 畫面截圖
-![](https://i.imgur.com/cmqCtHm.gif)
+![](https://i.imgur.com/OYUub1R.gif)
 > 提供的匯率來自於第三方，這些匯率的正確性沒有經過驗證，而且實際匯率可能會有所差異
 
-![](https://i.imgur.com/gQCHMJp.png)
+![](https://i.imgur.com/d06ny1a.png)
 > 每次執行匯率換算會記錄到歷程以供查詢
